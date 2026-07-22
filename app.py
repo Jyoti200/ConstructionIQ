@@ -123,7 +123,7 @@ def load_combined():
 dpr, material = load_data()
 combined = load_combined()
 
-st.title("🏗️ Project Centralization Dashboard")
+st.title("Project Centralization Dashboard")
 st.caption("Consolidated labour deployment and material receipts across sites, blocks and contractors.")
 
 # ---------------- Sidebar filters ----------------
