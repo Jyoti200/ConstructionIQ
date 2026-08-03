@@ -23,7 +23,7 @@ jobs:
       - name: Build schema only if database doesn't exist yet
         run: |
           if [ ! -f project.db ]; then
-            python build_schema.py
+            python schema.py
           else
             echo "project.db already exists — skipping schema build."
           fi
