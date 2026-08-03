@@ -4,10 +4,14 @@ on:
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
-permissions: write-all
+
+permissions:
+  contents: write
+
 jobs:
   sync-data:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -15,18 +19,16 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Build schema only if database doesn't exist yet
-        run: |
-          if [ ! -f project.db ]; then
-            python schema.py
-          else
-            echo "project.db already exists — skipping schema build."
-          fi
+      - name: Delete existing database
+        run: rm -f project.db
+
+      - name: Build schema
+        run: python schema.py
 
       - name: Run DPR loader
         env:
