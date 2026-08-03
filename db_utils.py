@@ -119,7 +119,7 @@ def _normalize_alias(raw_name: str) -> str:
 
     # Remove common company suffixes
     s = re.sub(
-        r"\b(pvt|private|ltd|limited|construction|constructions|const|co)\b",
+        r"\b(pvt|private|ltd|limited|construction|constructions|const|co|ji|Ji)\b",
         "",
         s,
     )
