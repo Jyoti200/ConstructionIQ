@@ -69,7 +69,15 @@ def load_dpr(df: pd.DataFrame, source_label: str):
                 contractor_id = get_or_create_contractor(conn, str(row["contractor"]))
 
             def to_int(v):
-                return None if pd.isna(v) else int(v)
+                if pd.isna(v):
+                    return None
+                s=str(v).strip()
+                if s in ("","-","NA","N/A"," "):
+                    return None
+                try:
+                    return int(float(s))
+                except ValueError:
+                    return None
 
             cur = conn.execute(
                 """INSERT OR IGNORE INTO fact_dpr_progress
