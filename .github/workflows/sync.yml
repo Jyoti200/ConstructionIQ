@@ -1,0 +1,47 @@
+name: Sync DPR and Material Data
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build schema only if database doesn't exist yet
+        run: |
+          if [ ! -f project.db ]; then
+            python build_schema.py
+          else
+            echo "project.db already exists — skipping schema build."
+          fi
+
+      - name: Run DPR loader
+        env:
+          SHEET_ID: ${{ secrets.DPR_SHEET_ID }}
+        run: python load_dpr.py --sheet-id "$DPR_SHEET_ID" --gid "$DPR_SHEET_GID"
+
+      - name: Run Material loader
+        env:
+          SHEET_ID: ${{ secrets.MATERIAL_SHEET_ID }}
+        run: python material.py --sheet-id "$MATERIAL_SHEET_ID"
+
+      - name: Commit and push updated database
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add project.db
+          git diff --staged --quiet || git commit -m "Auto-sync data $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
