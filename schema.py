@@ -89,11 +89,21 @@ CREATE TABLE fact_material (
     FOREIGN KEY (block_id) REFERENCES dim_block(block_id),
     FOREIGN KEY (contractor_id) REFERENCES dim_contractor(contractor_id),
     FOREIGN KEY (activity_id) REFERENCES dim_activity(activity_id),
-    FOREIGN KEY (material_id) REFERENCES dim_material(material_id)
+    FOREIGN KEY (material_id) REFERENCES dim_material(material_id),
+    UNIQUE (site_id, date_id, block_id, activity_id, contractor_id)
 );
 
 CREATE INDEX idx_fact_dpr_site_date ON fact_dpr_progress(site_id, date_id);
 CREATE INDEX idx_fact_material_site_date ON fact_material(site_id, date_id);
+CREATE UNIQUE INDEX idx_material_dedupe
+ON fact_material (
+    site_id, date_id,
+    COALESCE(block_id, -1),
+    COALESCE(contractor_id, -1),
+    COALESCE(activity_id, -1),
+    material_id,
+    COALESCE(received_quantity, -1)
+);
 """
 
 
