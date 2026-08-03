@@ -30,12 +30,13 @@ jobs:
 
       - name: Run DPR loader
         env:
-          SHEET_ID: ${{ secrets.DPR_SHEET_ID }}
+          DPR_SHEET_ID: ${{ secrets.DPR_SHEET_ID }}
+          DPR_SHEET_GID: ${{ secrets.DPR_SHEET_GID }}
         run: python load_dpr.py --sheet-id "$DPR_SHEET_ID" --gid "$DPR_SHEET_GID"
 
       - name: Run Material loader
         env:
-          SHEET_ID: ${{ secrets.MATERIAL_SHEET_ID }}
+          MATERIAL_SHEET_ID: ${{ secrets.MATERIAL_SHEET_ID }}
         run: python material.py --sheet-id "$MATERIAL_SHEET_ID"
 
       - name: Commit and push updated database
