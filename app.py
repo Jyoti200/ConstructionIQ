@@ -14,7 +14,7 @@ import streamlit as st
 
 DB_PATH = "project.db"
 
-st.set_page_config(page_title="Project Dashboard", layout="wide", page_icon="🏗️")
+st.set_page_config(page_title="Project Dashboard", layout="wide")
 
 # ---------------- Theme ----------------
 ACCENT = "#2E6F95"       # steel blue — labour
@@ -128,7 +128,7 @@ st.title("🏗️ Project Dashboard")
 st.caption("A simple view of who's working where, and what materials have come in.")
 
 # ---------------- Sidebar filters (plain language) ----------------
-st.sidebar.header("🔍 Filter")
+st.sidebar.header("Filter")
 
 sites = sorted(set(dpr["site_name"]) | set(material["site_name"]))
 selected_sites = st.sidebar.multiselect("Site", sites, default=sites)
