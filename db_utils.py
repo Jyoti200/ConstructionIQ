@@ -73,7 +73,7 @@ def _strip_common_suffixes(s: str) -> str:
     """Remove filler words that shouldn't drive a match (contractor-style suffixes)."""
     s = re.sub(
         r"\b(construction|constructions|const|cons|co|company|cont|contractor|"
-        r"pvt|private|ltd|limited|and sons|sons|ji)\b",
+        r"pvt|private|ltd|ji)\b",
         "",
         s,
     )
@@ -81,8 +81,6 @@ def _strip_common_suffixes(s: str) -> str:
 
 
 def _phonetic_key(s: str) -> str:
-    """Per-token Metaphone key, joined. Order-sensitive on purpose —
-    combined with token_sort_ratio (which IS order-insensitive) below."""
     tokens = [t for t in s.split() if t]
     return " ".join(jellyfish.metaphone(t) for t in tokens)
 
