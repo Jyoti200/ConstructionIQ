@@ -72,8 +72,7 @@ def load_material(df: pd.DataFrame, source_label: str):
             if not pd.isna(row.get("contractor")) and str(row.get("contractor")).strip():
                 contractor_id = get_or_create_contractor(conn, str(row["contractor"]))
 
-            # Work description is optional — some site engineers don't know it.
-            # Leave activity_id NULL when blank rather than guessing.
+            # Work description is optional — store manager may not know the material being issued.
             activity_id = None
             if not pd.isna(row.get("work_description")) and str(row.get("work_description")).strip():
                 activity_id = get_or_create_activity_from_description(conn, str(row["work_description"]))
