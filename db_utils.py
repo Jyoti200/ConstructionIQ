@@ -1,31 +1,3 @@
-"""
-db_utils.py
------------
-Shared helper functions for the loader scripts. Every loader does the
-same "look up or insert a dimension row, get back its ID" dance —
-that logic lives here once instead of being copy-pasted four times.
-
-Fuzzy matching
----------------
-All five dimensions (site, block, contractor, activity-from-description,
-material) go through the same two-stage lookup:
-
-  1. Exact match on a normalized key (fast path, handles the vast
-     majority of repeat rows).
-  2. If no exact match, fuzzy match against existing rows in that
-     dimension using character-level similarity (RapidFuzz
-     token_sort_ratio) PLUS a phonetic key (Metaphone) as a secondary
-     signal, so things like "Mahaveer Const." / "Mahavir
-     Construction" / "Mahaveer Cons" all resolve to one row instead
-     of creating near-duplicates.
-
-Formal identifiers (a WBS code from MS Project, a literal date) are
-NEVER fuzzy-matched — those are exact keys by definition. Fuzzy
-matching only applies to free-text human-entered names.
-
-Not meant to be run directly.
-"""
-
 import sqlite3
 import datetime as dt
 import re
