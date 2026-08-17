@@ -114,6 +114,14 @@ streamlit run app.py
 
 The dashboard will open in your browser, reading live from `project.db`.
 
+<img width="1440" height="767" alt="image" src="https://github.com/user-attachments/assets/3345fe60-1fc2-49a5-8f0b-630ea73768d6" />
+
+<img width="1438" height="727" alt="image" src="https://github.com/user-attachments/assets/f76f633c-21f9-4455-b2ae-74957f607247" />
+
+<img width="1427" height="719" alt="image" src="https://github.com/user-attachments/assets/d1d5820b-5da1-4b06-a1bb-73c4d001f31e" />
+
+<img width="1433" height="700" alt="image" src="https://github.com/user-attachments/assets/c50c8c5e-6df0-4171-898e-06c7f53a9e34" />
+
 ---
 
 ##  Repository Structure
