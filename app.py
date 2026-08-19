@@ -172,16 +172,21 @@ combined_f = combined[
 ]
 
 # ---------------- KPI row (always visible, above the tabs) ----------------
+total_mason_cost = dpr_f["skilled_count"].sum() * 1000
+total_helper_cost = dpr_f["helper_count"].sum() * 650
+total_coolie_cost = dpr_f["coolie_count"].sum() * 450
+total_labour_cost = total_mason_cost + total_helper_cost + total_coolie_cost
 total_labour = dpr_f["total_labour"].sum()
 active_contractors = dpr_f["contractor_name"].nunique()
 material_entries = len(mat_f)
 avg_daily_labour = dpr_f.groupby("date")["total_labour"].sum().mean() if not dpr_f.empty else 0
 
-k1, k2, k3, k4 = st.columns(4)
+k1, k2, k3, k4,k5 = st.columns(5)
 k1.metric("👷 People deployed", f"{int(total_labour):,}" if pd.notna(total_labour) else "—")
 k2.metric("📅 Avg. per day", f"{avg_daily_labour:,.0f}" if pd.notna(avg_daily_labour) else "—")
 k3.metric("🏢 Contractors active", f"{active_contractors:,}")
 k4.metric("📦 Material deliveries", f"{material_entries:,}")
+k5.metric("Total Company Labour Cost",f"{total_labour_cost,}")
 
 st.write("")
 
