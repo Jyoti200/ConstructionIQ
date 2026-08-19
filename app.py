@@ -186,7 +186,7 @@ k1.metric("👷 People deployed", f"{int(total_labour):,}" if pd.notna(total_lab
 k2.metric("📅 Avg. per day", f"{avg_daily_labour:,.0f}" if pd.notna(avg_daily_labour) else "—")
 k3.metric("🏢 Contractors active", f"{active_contractors:,}")
 k4.metric("📦 Material deliveries", f"{material_entries:,}")
-k5.metric("Total Company Labour Cost",f"{total_labour_cost,}")
+k5.metric("Total Company Labour Cost",f"{total_labour_cost:,.0f}")
 
 st.write("")
 
