@@ -172,9 +172,9 @@ combined_f = combined[
 ]
 
 # ---------------- KPI row (always visible, above the tabs) ----------------
-total_mason_cost = dpr_f["skilled_count"].sum() * 1000
-total_helper_cost = dpr_f["helper_count"].sum() * 650
-total_coolie_cost = dpr_f["coolie_count"].sum() * 450
+total_mason_cost = (dpr_f["skilled_count"].sum()) * 1000
+total_helper_cost = (dpr_f["helper_count"].sum()) * 650
+total_coolie_cost = (dpr_f["coolie_count"].sum()) * 450
 total_labour_cost = total_mason_cost + total_helper_cost + total_coolie_cost
 total_labour = dpr_f["total_labour"].sum()
 active_contractors = dpr_f["contractor_name"].nunique()
