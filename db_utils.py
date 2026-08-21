@@ -225,54 +225,26 @@ def get_or_create_contractor(conn, raw_name: str) -> int:
     )
     return contractor_id
 
-
 # -------------------------------------------------------------------
 # dim_activity
 # -------------------------------------------------------------------
-def get_or_create_activity(conn, wbs_code: str, activity_name: str) -> int:
-    """
-    Formal MS Project WBS codes are exact identifiers by design —
-    NOT fuzzy matched. A code either matches or it doesn't.
-    """
-    wbs_code = str(wbs_code).strip()
+def get_or_create_activity(conn, activity_name: str) -> int:
+    activity_name = activity_name.strip()
+
     row = conn.execute(
-        "SELECT activity_id FROM dim_activity WHERE wbs_code = ?", (wbs_code,)
+        "SELECT activity_id FROM dim_activity WHERE activity_name = ?",
+        (activity_name,)
     ).fetchone()
+
     if row:
         return row[0]
 
-    conn.execute(
-        "INSERT INTO dim_activity (wbs_code, activity_name) VALUES (?, ?)",
-        (wbs_code, activity_name.strip()),
+    cursor = conn.execute(
+        "INSERT INTO dim_activity (activity_name) VALUES (?)",
+        (activity_name,)
     )
-    return conn.execute(
-        "SELECT activity_id FROM dim_activity WHERE wbs_code = ?", (wbs_code,)
-    ).fetchone()[0]
 
-
-def get_or_create_activity_from_description(conn, description: str) -> int:
-    """
-    For sources with no formal WBS code (e.g. DPR sheets, which only
-    have a free-text 'Work Description'). Free text -> fuzzy matched
-    against OTHER synthetic (DPR-*) activities before creating a new
-    one, so "Excavation - Foundation Block A" and "Excavation
-    Foundation Block-A" collapse into a single activity instead of
-    forking the fact table's grain.
-    """
-    description = description.strip()
-    norm = normalize_text(description)
-
-    existing = conn.execute(
-        "SELECT activity_id, activity_name FROM dim_activity WHERE wbs_code LIKE 'DPR-%'"
-    ).fetchall()
-    existing_norm = [(aid, normalize_text(name)) for aid, name in existing]
-    match_id = _fuzzy_best_match(norm, existing_norm)
-    if match_id:
-        return match_id
-
-    wbs_code = f"DPR-{slugify(description)}"
-    return get_or_create_activity(conn, wbs_code, description)
-
+    return cursor.lastrowid
 
 # -------------------------------------------------------------------
 # dim_block
