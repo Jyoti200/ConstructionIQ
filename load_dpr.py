@@ -16,7 +16,7 @@ from db_utils import (
     get_or_create_site,
     get_or_create_date,
     get_or_create_block,
-    get_or_create_activity_from_description,
+    get_or_create_activity,
     get_or_create_contractor,
 )
 
@@ -62,7 +62,7 @@ def load_dpr(df: pd.DataFrame, source_label: str):
             if not pd.isna(row.get("block")) and str(row.get("block")).strip():
                 block_id = get_or_create_block(conn, site_id, str(row["block"]))
 
-            activity_id = get_or_create_activity_from_description(conn, str(row["work_description"]))
+            activity_id = get_or_create_activity(conn, str(row["work_description"]))
 
             contractor_id = None
             if not pd.isna(row.get("contractor")) and str(row.get("contractor")).strip():
