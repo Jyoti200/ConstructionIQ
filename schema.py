@@ -19,8 +19,7 @@ CREATE TABLE dim_date (
 CREATE TABLE dim_site (
     site_id INTEGER PRIMARY KEY AUTOINCREMENT,
     site_name TEXT NOT NULL UNIQUE,
-    site_code TEXT
-);
+    );
 
 CREATE TABLE dim_block (
     block_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -43,7 +42,6 @@ CREATE TABLE contractor_alias (
 
 CREATE TABLE dim_activity (
     activity_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    wbs_code TEXT NOT NULL UNIQUE,
     activity_name TEXT NOT NULL
 );
 
