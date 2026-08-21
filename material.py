@@ -18,7 +18,7 @@ from db_utils import (
     get_or_create_material,
     get_or_create_contractor,
     get_or_create_block,
-    get_or_create_activity_from_description,
+    get_or_create_activity,
 )
 
 COLUMN_MAP = {
@@ -75,7 +75,7 @@ def load_material(df: pd.DataFrame, source_label: str):
             # Work description is optional — store manager may not know the material being issued.
             activity_id = None
             if not pd.isna(row.get("work_description")) and str(row.get("work_description")).strip():
-                activity_id = get_or_create_activity_from_description(conn, str(row["work_description"]))
+                activity_id = get_or_create_activity(conn, str(row["work_description"]))
 
             qty = None if pd.isna(row.get("quantity")) else float(row.get("quantity"))
 
