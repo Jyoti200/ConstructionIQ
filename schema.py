@@ -95,6 +95,15 @@ CREATE TABLE fact_material (
 
 CREATE INDEX idx_fact_dpr_site_date ON fact_dpr_progress(site_id, date_id);
 CREATE INDEX idx_fact_material_site_date ON fact_material(site_id, date_id);
+#new added code! test it
+CREATE UNIQUE INDEX idx_dpr_dedupe
+ON fact_dpr_progress (
+    site_id,
+    date_id,
+    COALESCE(block_id, -1),
+    activity_id,
+    COALESCE(contractor_id, -1)
+);
 CREATE UNIQUE INDEX idx_material_dedupe
 ON fact_material (
     site_id, date_id,
