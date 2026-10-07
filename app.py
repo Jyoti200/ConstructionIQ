@@ -1,11 +1,7 @@
-f"""
-app.py — Project Centralization Dashboard
--------------------------------------------
-Run with: streamlit run app.py
-Needs project.db in the same folder (built + loaded already).
-
-Requires: pip install streamlit pandas plotly
-"""
+# app.py - Project Centralization Dashboard
+# Run with: streamlit run app.py
+# Needs project.db in the same folder (built + loaded already).
+# Requires: pip install streamlit pandas plotly
 
 import sqlite3
 import pandas as pd
